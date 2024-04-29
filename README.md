@@ -1,0 +1,1 @@
+# @adimis/react-schema-table
