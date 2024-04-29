@@ -1,5 +1,4 @@
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import SchemaTable from "./components/SchemaTable/SchemaTable";
 import { Button } from "./components/ui/button";
 import {
   DropdownMenu,
@@ -10,11 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { Checkbox } from "./components/ui/checkbox";
+import { DataTable } from "./components/SchemaTable/DataTable/DataTable";
 
 const App = () => {
   return (
-    <SchemaTable
-      columnSchema={[
+    <DataTable
+      columns={[
         {
           id: "select",
           header: ({ table }) => (
@@ -64,6 +64,8 @@ const App = () => {
           cell: ({ row }) => (
             <div className="lowercase">{row.getValue("email")}</div>
           ),
+          enableSorting: true,
+          enableMultiSort: true,
         },
         {
           accessorKey: "amount",
@@ -71,7 +73,6 @@ const App = () => {
           cell: ({ row }) => {
             const amount = parseFloat(row.getValue("amount"));
 
-            // Format the amount as a dollar amount
             const formatted = new Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -110,7 +111,7 @@ const App = () => {
           },
         },
       ]}
-      rowData={[
+      data={[
         {
           id: "m5gr84i9",
           amount: 316,

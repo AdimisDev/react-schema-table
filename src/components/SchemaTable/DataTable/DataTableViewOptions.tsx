@@ -1,3 +1,4 @@
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
@@ -45,9 +45,7 @@ export function DataTableViewOptions<TData>({
                 key={column.id}
                 className="capitalize"
                 checked={column.getIsVisible()}
-                onCheckedChange={(value: any) =>
-                  column.toggleVisibility(!!value)
-                }
+                onCheckedChange={(value: any) => column.toggleVisibility(!!value)}
               >
                 {column.id}
               </DropdownMenuCheckboxItem>
