@@ -13,11 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DataTablePaginationProps } from "./interface";
+import { EditableTablePaginationProps } from "./interface";
 
-export function DataTablePagination<TData>({
+export function EditableTablePagination<TData>({
   table,
-}: DataTablePaginationProps<TData>) {
+}: EditableTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">

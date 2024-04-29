@@ -1,6 +1,6 @@
 import { Column, ColumnDef, Table } from "@tanstack/react-table";
 
-export interface DataTableProps<TData, TValue> {
+export interface EditableTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   panel?: boolean;
@@ -22,16 +22,16 @@ export interface DataTableProps<TData, TValue> {
   renderTableFooter?: (table: Table<TData>) => React.ReactNode;
 }
 
-export interface DataTableColumnHeaderProps<TData, TValue>
+export interface EditableTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
   title: string;
 }
 
-export interface DataTablePaginationProps<TData> {
+export interface EditableTablePaginationProps<TData> {
   table: Table<TData>;
 }
 
-export interface DataTableViewOptionsProps<TData> {
+export interface EditableTableViewOptionsProps<TData> {
   table: Table<TData>;
 }

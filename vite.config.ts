@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import dts from "vite-plugin-dts";
 import path from "path";
-import { analyzer } from "vite-bundle-analyzer";
 
 export default defineConfig({
   resolve: {
@@ -28,5 +27,5 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: true,
   },
-  plugins: [react(), dts(), analyzer()],
+  plugins: [react(), dts()],
 });

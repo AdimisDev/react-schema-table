@@ -1,6 +1,9 @@
-export * from "@/components/SchemaTable/DataTable/interface";
 import "./src/index.css";
 
-import { DataTable as SchemaDataTable } from "@/components/SchemaTable/DataTable/DataTable";
+export * from "./src/components/SchemaTable/DataTable/interface";
+export * from "./src/components/SchemaTable/EditableTable/interface";
 
-export default SchemaDataTable;
+import { DataTable as SchemaDataTable } from "./src/components/SchemaTable/DataTable/DataTable";
+import { EditableTable as SchemaEditableTable } from "./src/components/SchemaTable/EditableTable/EditableTable";
+
+export { SchemaDataTable, SchemaEditableTable };

@@ -9,11 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DataTableViewOptionsProps } from "./interface";
+import { EditableTableViewOptionsProps } from "./interface";
 
-export function DataTableViewOptions<TData>({
+export function EditableTableViewOptions<TData>({
   table,
-}: DataTableViewOptionsProps<TData>) {
+}: EditableTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
