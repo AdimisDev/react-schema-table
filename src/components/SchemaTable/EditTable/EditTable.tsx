@@ -1,5 +1,8 @@
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "./components/ui/button";
+import { DataTable } from "../DataTable/DataTable";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,13 +10,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu";
-import { Checkbox } from "./components/ui/checkbox";
-import { DataTable } from "./components/SchemaTable/DataTable/DataTable";
-import { Card, CardContent, CardHeader } from "./components/ui/card";
-import { DataTableColumnHeader } from "./components/SchemaTable/DataTable/DataTableColumnHeader";
+} from "@/components/ui/dropdown-menu";
 
-const App = () => {
+const EditTable = () => {
   return (
     <Card>
       <CardHeader>
@@ -48,11 +47,7 @@ const App = () => {
             },
             {
               accessorKey: "status",
-              header: ({column}) => {
-                return (
-                  <DataTableColumnHeader column={column} title="Status"/>
-                );
-              },
+              header: "Status",
               cell: ({ row }) => (
                 <div className="capitalize">{row.getValue("status")}</div>
               ),
@@ -164,4 +159,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default EditTable;

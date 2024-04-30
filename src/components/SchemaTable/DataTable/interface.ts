@@ -18,22 +18,33 @@ export interface DataTableProps<TData, TValue> {
     dataTableClassName?: string;
     dataTableStyle?: React.CSSProperties;
   };
-  filtersConfig?: {
-    placeholder: string;
-    columnNames: string[];
-  };
   renderTableHeader?: (
     table: Table<TData>,
-    CardTitle: React.ForwardRefExoticComponent<
-      React.HTMLAttributes<HTMLHeadingElement> &
-        React.RefAttributes<HTMLParagraphElement>
-    >,
-    CardDescription: React.ForwardRefExoticComponent<
-      React.HTMLAttributes<HTMLParagraphElement> &
-        React.RefAttributes<HTMLParagraphElement>
-    >
+    getFilterValues: (columnName: string) => string,
+    setFilterValues: (columnName: string, value: any) => void | undefined,
+    ContainerTitle:
+      | React.ForwardRefExoticComponent<
+          React.HTMLAttributes<HTMLHeadingElement> &
+            React.RefAttributes<HTMLParagraphElement>
+        >
+      | "h2",
+    ContainerDescription:
+      | React.ForwardRefExoticComponent<
+          React.HTMLAttributes<HTMLParagraphElement> &
+            React.RefAttributes<HTMLParagraphElement>
+        >
+      | "p"
   ) => React.ReactNode;
   renderTableFooter?: (table: Table<TData>) => React.ReactNode;
+  renderFilter?: (
+    getFilterValues: (columnName: string) => string,
+    setFilterValues: (columnName: string, value: any) => void | undefined
+  ) => React.ReactNode;
+  renderColumnVisibility?: DataTableViewOptionsProps<
+    TData,
+    TValue
+  >["renderColumnVisibility"];
+  renderPagination?: DataTablePaginationProps<TData>["renderPagination"];
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>
@@ -44,8 +55,14 @@ export interface DataTableColumnHeaderProps<TData, TValue>
 
 export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
+  renderPagination?: (table: Table<TData>) => React.ReactNode;
 }
 
-export interface DataTableViewOptionsProps<TData> {
+export interface DataTableViewOptionsProps<TData, TValue> {
   table: Table<TData>;
+  renderColumnVisibility?: (
+    getAllColumns: () => Column<TData, TValue>[],
+    getColumnVisibility: (column: Column<TData, TValue>) => boolean,
+    setColumnVisibility: (column: Column<TData, TValue>, value: boolean) => void
+  ) => React.ReactNode;
 }

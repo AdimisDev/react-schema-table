@@ -18,23 +18,31 @@ import {
   TableRow,
   Table,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { Input } from "../../ui/input";
+import { useEffect, useState } from "react";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../ui/card";
 import { DataTableProps } from "./interface";
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  filtersConfig,
   panel,
   styles,
   renderTableFooter,
   renderTableHeader,
   title,
-  description
+  description,
+  renderFilter,
+  renderColumnVisibility,
+  renderPagination,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -44,6 +52,8 @@ export function DataTable<TData, TValue>({
   const ContainerHeader = panel ? CardHeader : "div";
   const ContainerContent = panel ? CardContent : "div";
   const ContainerFooter = panel ? CardFooter : "div";
+  const ContainerTitle = panel ? CardTitle : "h2";
+  const ContainerDescription = panel ? CardDescription : "p";
 
   const table = useReactTable({
     data,
@@ -62,6 +72,24 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  useEffect(() => {
+    console.log("Data Table: Sorting: ", sorting);
+    console.log("Data Table: Column Filters: ", columnFilters);
+    console.log("Data Table: Column Visibility: ", columnVisibility);
+  }, [sorting, columnFilters, columnVisibility]);
+
+  const getFilterValues = (columnName: string) => {
+    const response = table.getColumn(columnName)?.getFilterValue() as string;
+    console.log("getFilterValues response: ", response);
+    return response;
+  };
+
+  const setFilterValues = (columnName: string, value: any) => {
+    const response = table.getColumn(columnName)?.setFilterValue(value);
+    console.log("setFilterValues response: ", response);
+    return response;
+  };
+
   return (
     <Container
       className={styles?.containerClassName}
@@ -72,32 +100,22 @@ export function DataTable<TData, TValue>({
         style={styles?.headerStyle}
       >
         {renderTableHeader ? (
-          renderTableHeader(table, CardTitle, CardDescription)
+          renderTableHeader(
+            table,
+            getFilterValues,
+            setFilterValues,
+            ContainerTitle,
+            ContainerDescription
+          )
         ) : (
           <>
-            <CardTitle>
-              {title}
-            </CardTitle>
-            <CardDescription>
-              {description}
-            </CardDescription>
-            {filtersConfig?.columnNames.map((columnName) => (
-              <Input
-                key={columnName}
-                placeholder={filtersConfig.placeholder}
-                value={
-                  (table.getColumn(columnName)?.getFilterValue() as string) ??
-                  ""
-                }
-                onChange={(event) =>
-                  table
-                    .getColumn(columnName)
-                    ?.setFilterValue(event.target.value)
-                }
-                className="max-w-sm mr-4"
-              />
-            ))}
-            <DataTableViewOptions table={table} />
+            {title && <CardTitle>{title}</CardTitle>}
+            {description && <CardDescription>{description}</CardDescription>}
+            {renderFilter && renderFilter(getFilterValues, setFilterValues)}
+            <DataTableViewOptions
+              table={table}
+              renderColumnVisibility={renderColumnVisibility}
+            />
           </>
         )}
       </ContainerHeader>
@@ -105,55 +123,58 @@ export function DataTable<TData, TValue>({
         className={styles?.containerClassName}
         style={styles?.containerStyle}
       >
-        <div className={styles?.dataTableClassName} style={styles?.dataTableStyle}>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <div
+          className={styles?.dataTableClassName}
+          style={styles?.dataTableStyle}
+        >
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
       </ContainerContent>
       <ContainerFooter
@@ -163,7 +184,10 @@ export function DataTable<TData, TValue>({
         {renderTableFooter ? (
           renderTableFooter(table)
         ) : (
-          <DataTablePagination table={table} />
+          <DataTablePagination
+            table={table}
+            renderPagination={renderPagination}
+          />
         )}
       </ContainerFooter>
     </Container>

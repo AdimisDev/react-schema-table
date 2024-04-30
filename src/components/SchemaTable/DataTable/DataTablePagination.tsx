@@ -17,8 +17,11 @@ import { DataTablePaginationProps } from "./interface";
 
 export function DataTablePagination<TData>({
   table,
+  renderPagination,
 }: DataTablePaginationProps<TData>) {
-  return (
+  return renderPagination ? (
+    renderPagination(table)
+  ) : (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
