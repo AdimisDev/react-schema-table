@@ -13,6 +13,7 @@ export interface DataTableProps<TData, TValue> {
     contentStyle?: React.CSSProperties;
     footerClassName?: string;
     footerStyle?: React.CSSProperties;
+    dataTableClassName?: string;
   };
   filtersConfig?: {
     placeholder: string;
