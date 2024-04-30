@@ -22,7 +22,7 @@ import { useState } from "react";
 import { Input } from "../../ui/input";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
-import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { DataTableProps } from "./interface";
 
 export function DataTable<TData, TValue>({
@@ -33,6 +33,8 @@ export function DataTable<TData, TValue>({
   styles,
   renderTableFooter,
   renderTableHeader,
+  title,
+  description
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -70,9 +72,15 @@ export function DataTable<TData, TValue>({
         style={styles?.headerStyle}
       >
         {renderTableHeader ? (
-          renderTableHeader(table)
+          renderTableHeader(table, CardTitle, CardDescription)
         ) : (
           <>
+            <CardTitle>
+              {title}
+            </CardTitle>
+            <CardDescription>
+              {description}
+            </CardDescription>
             {filtersConfig?.columnNames.map((columnName) => (
               <Input
                 key={columnName}
@@ -97,55 +105,55 @@ export function DataTable<TData, TValue>({
         className={styles?.containerClassName}
         style={styles?.containerStyle}
       >
-        <div className={styles?.dataTableClassName}>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
+        <div className={styles?.dataTableClassName} style={styles?.dataTableStyle}>
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
         </div>
       </ContainerContent>
       <ContainerFooter
