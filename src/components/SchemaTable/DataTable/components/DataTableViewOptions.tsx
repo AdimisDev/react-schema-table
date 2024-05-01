@@ -8,46 +8,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DataTableViewOptionsProps } from "./interface";
+import { DataTableViewOptionsProps } from "../interface";
 import { Column } from "@tanstack/react-table";
 
-export function DataTableViewOptions<TData, TValue>({
+export function DataTableViewOptions<TData>({
   table,
-  renderColumnVisibility,
-}: DataTableViewOptionsProps<TData, TValue>) {
-  const getAllColumns = (): Column<TData, TValue>[] => {
+}: DataTableViewOptionsProps<TData>) {
+  const getAllColumns = (): Column<TData, any[]>[] => {
     return table
       .getAllColumns()
       .filter(
         (column) =>
           typeof column.accessorFn !== "undefined" && column.getCanHide()
-      ) as Column<TData, TValue>[];
+      ) as Column<TData, any>[];
   };
 
-  const getColumnVisibility = (column: Column<TData, TValue>) => {
+  const getColumnVisibility = (column: Column<TData, any>) => {
     return column.getIsVisible();
   };
 
   const setColumnVisibility = (
-    column: Column<TData, TValue>,
+    column: Column<TData, any>,
     value: boolean
   ) => {
     return column.toggleVisibility(!!value);
   };
 
-  return renderColumnVisibility ? (
-    renderColumnVisibility(
-      getAllColumns,
-      getColumnVisibility,
-      setColumnVisibility
-    )
-  ) : (
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto hidden h-8 lg:flex"
+          className="ml-auto h-8 lg:flex"
         >
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
           View

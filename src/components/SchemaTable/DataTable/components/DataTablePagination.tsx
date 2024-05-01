@@ -13,15 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DataTablePaginationProps } from "./interface";
+import { DataTablePaginationProps } from "../interface";
 
 export function DataTablePagination<TData>({
   table,
-  renderPagination,
 }: DataTablePaginationProps<TData>) {
-  return renderPagination ? (
-    renderPagination(table)
-  ) : (
+  return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
@@ -40,7 +37,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[3, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>

@@ -19,8 +19,6 @@ import {
   Table,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import { DataTablePagination } from "./DataTablePagination";
-import { DataTableViewOptions } from "./DataTableViewOptions";
 import {
   Card,
   CardContent,
@@ -34,15 +32,13 @@ import { DataTableProps } from "./interface";
 export function DataTable<TData, TValue>({
   columns,
   data,
-  panel,
   styles,
   renderTableFooter,
   renderTableHeader,
   title,
   description,
   renderFilter,
-  renderColumnVisibility,
-  renderPagination,
+  panel = true,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -95,30 +91,25 @@ export function DataTable<TData, TValue>({
       className={styles?.containerClassName}
       style={styles?.containerStyle}
     >
-      <ContainerHeader
-        className={styles?.headerClassName}
-        style={styles?.headerStyle}
-      >
-        {renderTableHeader ? (
-          renderTableHeader(
-            table,
-            getFilterValues,
-            setFilterValues,
-            ContainerTitle,
-            ContainerDescription
-          )
-        ) : (
-          <>
-            {title && <CardTitle>{title}</CardTitle>}
-            {description && <CardDescription>{description}</CardDescription>}
-            {renderFilter && renderFilter(getFilterValues, setFilterValues)}
-            <DataTableViewOptions
-              table={table}
-              renderColumnVisibility={renderColumnVisibility}
-            />
-          </>
-        )}
-      </ContainerHeader>
+      {renderTableHeader ? (
+        renderTableHeader(
+          table,
+          ContainerHeader,
+          ContainerTitle,
+          ContainerDescription,
+          getFilterValues,
+          setFilterValues
+        )
+      ) : (
+        <ContainerHeader
+          className={styles?.headerClassName}
+          style={styles?.headerStyle}
+        >
+          {title && <CardTitle>{title}</CardTitle>}
+          {description && <CardDescription>{description}</CardDescription>}
+          {renderFilter && renderFilter(getFilterValues, setFilterValues)}
+        </ContainerHeader>
+      )}
       <ContainerContent
         className={styles?.containerClassName}
         style={styles?.containerStyle}
@@ -177,19 +168,7 @@ export function DataTable<TData, TValue>({
           </Table>
         </div>
       </ContainerContent>
-      <ContainerFooter
-        className={styles?.footerClassName}
-        style={styles?.footerStyle}
-      >
-        {renderTableFooter ? (
-          renderTableFooter(table)
-        ) : (
-          <DataTablePagination
-            table={table}
-            renderPagination={renderPagination}
-          />
-        )}
-      </ContainerFooter>
+      {renderTableFooter && renderTableFooter(table, ContainerFooter)}
     </Container>
   );
 }

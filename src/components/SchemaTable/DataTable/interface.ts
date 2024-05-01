@@ -20,8 +20,12 @@ export interface DataTableProps<TData, TValue> {
   };
   renderTableHeader?: (
     table: Table<TData>,
-    getFilterValues: (columnName: string) => string,
-    setFilterValues: (columnName: string, value: any) => void | undefined,
+    ContainerHeader:
+      | "div"
+      | React.ForwardRefExoticComponent<
+          React.HTMLAttributes<HTMLDivElement> &
+            React.RefAttributes<HTMLDivElement>
+        >,
     ContainerTitle:
       | React.ForwardRefExoticComponent<
           React.HTMLAttributes<HTMLHeadingElement> &
@@ -33,18 +37,23 @@ export interface DataTableProps<TData, TValue> {
           React.HTMLAttributes<HTMLParagraphElement> &
             React.RefAttributes<HTMLParagraphElement>
         >
-      | "p"
+      | "p",
+    getFilterValues: (columnName: string) => string,
+    setFilterValues: (columnName: string, value: any) => void | undefined
   ) => React.ReactNode;
-  renderTableFooter?: (table: Table<TData>) => React.ReactNode;
+  renderTableFooter?: (
+    table: Table<TData>,
+    ContainerFooter:
+      | "div"
+      | React.ForwardRefExoticComponent<
+          React.HTMLAttributes<HTMLDivElement> &
+            React.RefAttributes<HTMLDivElement>
+        >
+  ) => React.ReactNode;
   renderFilter?: (
     getFilterValues: (columnName: string) => string,
     setFilterValues: (columnName: string, value: any) => void | undefined
   ) => React.ReactNode;
-  renderColumnVisibility?: DataTableViewOptionsProps<
-    TData,
-    TValue
-  >["renderColumnVisibility"];
-  renderPagination?: DataTablePaginationProps<TData>["renderPagination"];
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>
@@ -55,14 +64,22 @@ export interface DataTableColumnHeaderProps<TData, TValue>
 
 export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-  renderPagination?: (table: Table<TData>) => React.ReactNode;
+  onNext?: (pageNumber: number) => void;
+  onPrevious?: (pageNumber: number) => void;
 }
 
-export interface DataTableViewOptionsProps<TData, TValue> {
+export interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
-  renderColumnVisibility?: (
-    getAllColumns: () => Column<TData, TValue>[],
-    getColumnVisibility: (column: Column<TData, TValue>) => boolean,
-    setColumnVisibility: (column: Column<TData, TValue>, value: boolean) => void
-  ) => React.ReactNode;
+}
+
+export interface DataTableActionCellProps {
+  menuLabel?: string;
+  menuItems: {
+    label?: string;
+    onClick?: () => void;
+    separator?: boolean;
+  }[];
+  icon?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 }
