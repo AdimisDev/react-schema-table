@@ -18,7 +18,7 @@ import {
   TableRow,
   Table,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -37,7 +37,7 @@ export function DataTable<TData, TValue>({
   renderTableHeader,
   title,
   description,
-  renderFilter,
+  filterFunctions,
   panel = true,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -66,25 +66,8 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
     },
+    filterFns: filterFunctions,
   });
-
-  useEffect(() => {
-    console.log("Data Table: Sorting: ", sorting);
-    console.log("Data Table: Column Filters: ", columnFilters);
-    console.log("Data Table: Column Visibility: ", columnVisibility);
-  }, [sorting, columnFilters, columnVisibility]);
-
-  const getFilterValues = (columnName: string) => {
-    const response = table.getColumn(columnName)?.getFilterValue() as string;
-    console.log("getFilterValues response: ", response);
-    return response;
-  };
-
-  const setFilterValues = (columnName: string, value: any) => {
-    const response = table.getColumn(columnName)?.setFilterValue(value);
-    console.log("setFilterValues response: ", response);
-    return response;
-  };
 
   return (
     <Container
@@ -96,9 +79,7 @@ export function DataTable<TData, TValue>({
           table,
           ContainerHeader,
           ContainerTitle,
-          ContainerDescription,
-          getFilterValues,
-          setFilterValues
+          ContainerDescription
         )
       ) : (
         <ContainerHeader
@@ -107,7 +88,6 @@ export function DataTable<TData, TValue>({
         >
           {title && <CardTitle>{title}</CardTitle>}
           {description && <CardDescription>{description}</CardDescription>}
-          {renderFilter && renderFilter(getFilterValues, setFilterValues)}
         </ContainerHeader>
       )}
       <ContainerContent

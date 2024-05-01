@@ -1,4 +1,9 @@
-import { Column, ColumnDef, Table } from "@tanstack/react-table";
+import {
+  Column,
+  ColumnDef,
+  FilterFn,
+  Table,
+} from "@tanstack/react-table";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,8 +43,6 @@ export interface DataTableProps<TData, TValue> {
             React.RefAttributes<HTMLParagraphElement>
         >
       | "p",
-    getFilterValues: (columnName: string) => string,
-    setFilterValues: (columnName: string, value: any) => void | undefined
   ) => React.ReactNode;
   renderTableFooter?: (
     table: Table<TData>,
@@ -50,10 +53,7 @@ export interface DataTableProps<TData, TValue> {
             React.RefAttributes<HTMLDivElement>
         >
   ) => React.ReactNode;
-  renderFilter?: (
-    getFilterValues: (columnName: string) => string,
-    setFilterValues: (columnName: string, value: any) => void | undefined
-  ) => React.ReactNode;
+  filterFunctions?: Record<string, FilterFn<any>>
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>
@@ -69,6 +69,10 @@ export interface DataTablePaginationProps<TData> {
 }
 
 export interface DataTableViewOptionsProps<TData> {
+  table: Table<TData>;
+}
+
+export interface DataTableFilterProps<TData> {
   table: Table<TData>;
 }
 

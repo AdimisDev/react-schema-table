@@ -3,6 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import DataTable, {
   DataTableActionCell,
+  DataTableFilter,
   DataTablePagination,
   DataTableViewOptions,
 } from "../DataTable";
@@ -14,9 +15,7 @@ const EditTable = () => {
         table,
         ContainerHeader,
         ContainerTitle,
-        ContainerDescription
-        // getFilterValues,
-        // setFilterValues
+        ContainerDescription,
       ) => {
         return (
           <ContainerHeader>
@@ -24,7 +23,12 @@ const EditTable = () => {
             <ContainerDescription>
               Working Example of the Data Table
             </ContainerDescription>
-            <DataTableViewOptions table={table} />
+            <div className="flex justify-between items-center">
+              <DataTableFilter
+                table={table}
+              />
+              <DataTableViewOptions table={table} />
+            </div>
           </ContainerHeader>
         );
       }}
