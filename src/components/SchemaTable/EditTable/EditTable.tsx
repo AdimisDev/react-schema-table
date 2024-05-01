@@ -5,6 +5,7 @@ import DataTable, {
   DataTableActionCell,
   DataTableFilter,
   DataTablePagination,
+  DataTableSearch,
   DataTableViewOptions,
 } from "../DataTable";
 
@@ -15,7 +16,7 @@ const EditTable = () => {
         table,
         ContainerHeader,
         ContainerTitle,
-        ContainerDescription,
+        ContainerDescription
       ) => {
         return (
           <ContainerHeader>
@@ -23,11 +24,16 @@ const EditTable = () => {
             <ContainerDescription>
               Working Example of the Data Table
             </ContainerDescription>
+            <span className="mb-2" />
             <div className="flex justify-between items-center">
-              <DataTableFilter
-                table={table}
-              />
-              <DataTableViewOptions table={table} />
+              <div>
+                <DataTableSearch table={table} />
+              </div>
+              <div>
+                <DataTableFilter table={table} />
+                <span className="ml-2" />
+                <DataTableViewOptions table={table} />
+              </div>
             </div>
           </ContainerHeader>
         );

@@ -76,6 +76,10 @@ export interface DataTableFilterProps<TData> {
   table: Table<TData>;
 }
 
+export interface DataTableSearchProps<TData> {
+  table: Table<TData>;
+}
+
 export interface DataTableActionCellProps {
   menuLabel?: string;
   menuItems: {

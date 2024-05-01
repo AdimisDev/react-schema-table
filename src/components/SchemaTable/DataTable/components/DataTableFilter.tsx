@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Column } from "@tanstack/react-table";
-import { CircleX } from "lucide-react";
+import { CircleX, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { DataTableFilterProps } from "../interface";
@@ -53,8 +53,8 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
 
   const handleResetFilter = () => {
     setFilters([]);
-    table.resetColumnFilters()
-  }
+    table.resetColumnFilters();
+  };
 
   useEffect(() => {
     const handleApplyFilters = () => {
@@ -73,7 +73,8 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 mt-1">
+        <Button variant="outline" size="sm" className="h-8">
+          <Filter className="mr-2 h-4 w-4" />
           {filters.length > 0
             ? `${filters.length} ${
                 filters.length > 1 ? "filters" : "filter"
