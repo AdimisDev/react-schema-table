@@ -67,6 +67,12 @@ export interface DataTableProps<TData, TValue> {
       columnIndex: number;
     } | null
   ) => void;
+  onCellSelect?: (
+    focusedCell: {
+      rowIndex: number;
+      columnIndex: number;
+    } | null
+  ) => void;
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>

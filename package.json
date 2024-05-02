@@ -2,7 +2,7 @@
   "name": "@adimis/react-schema-table",
   "author": "AdimisDev",
   "private": false,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "GNU",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -57,7 +57,8 @@
     "react-hook-form": "^7.51.3",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "vite-plugin-dts": "^3.9.0"
+    "vite-plugin-dts": "^3.9.0",
+    "zod": "^3.23.5"
   },
   "engines": {
     "node": ">=18"

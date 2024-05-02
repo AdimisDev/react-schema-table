@@ -29,6 +29,7 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { DataTableProps } from "../interface";
+import { useKeyPress } from "@/hooks/useKeyPress";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -39,8 +40,9 @@ export function DataTable<TData, TValue>({
   title,
   description,
   filterFunctions,
-  panel = true,
   onFocusedCellChange,
+  onCellSelect,
+  panel = true,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -49,6 +51,53 @@ export function DataTable<TData, TValue>({
     rowIndex: number;
     columnIndex: number;
   } | null>(null);
+
+  useKeyPress("ArrowRight", () => moveFocus(0, 1));
+  useKeyPress("ArrowLeft", () => moveFocus(0, -1));
+  useKeyPress("ArrowUp", () => moveFocus(-1, 0));
+  useKeyPress("ArrowDown", () => moveFocus(1, 0));
+  useKeyPress("Escape", () => {
+    setFocusedCell(null);
+    if (onFocusedCellChange) onFocusedCellChange(null);
+    if (onCellSelect) onCellSelect(null);
+  });
+  useKeyPress("Enter", () => {
+    if (focusedCell) {
+      const { rowIndex, columnIndex } = focusedCell;
+      if (onCellSelect)
+        onCellSelect({
+          columnIndex: columnIndex,
+          rowIndex: rowIndex,
+        });
+      if (onFocusedCellChange)
+        onFocusedCellChange({
+          columnIndex: columnIndex,
+          rowIndex: rowIndex,
+        });
+    }
+  });
+
+  const moveFocus = (deltaRow: number, deltaCol: number) => {
+    if (focusedCell) {
+      const { rowIndex, columnIndex } = focusedCell;
+      const newRow = Math.max(
+        0,
+        Math.min(rowIndex + deltaRow, table.getRowModel().rows.length - 1)
+      );
+      const newCol = Math.max(
+        0,
+        Math.min(columnIndex + deltaCol, columns.length - 1)
+      );
+      setFocusedCell({ rowIndex: newRow, columnIndex: newCol });
+      console.log("Calling onFocusedCellChange: ", {
+        rowIndex: newRow,
+        columnIndex: newCol,
+      });
+      if (onFocusedCellChange) {
+        onFocusedCellChange({ rowIndex: newRow, columnIndex: newCol });
+      }
+    }
+  };
 
   const Container = panel ? Card : "div";
   const ContainerHeader = panel ? CardHeader : "div";
@@ -80,10 +129,8 @@ export function DataTable<TData, TValue>({
   };
 
   useEffect(() => {
-    if (onFocusedCellChange) {
-      onFocusedCellChange(focusedCell);
-    }
-  }, [focusedCell, onFocusedCellChange]);
+    setFocusedCell({ rowIndex: 0, columnIndex: 0 });
+  }, []);
 
   return (
     <Container
