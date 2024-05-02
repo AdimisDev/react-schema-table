@@ -1,9 +1,4 @@
-import {
-  Column,
-  ColumnDef,
-  FilterFn,
-  Table,
-} from "@tanstack/react-table";
+import { Column, ColumnDef, FilterFn, Table } from "@tanstack/react-table";
 
 export interface ExtendedColumnMeta {
   type?: React.HTMLInputTypeAttribute;
@@ -15,7 +10,7 @@ export interface DataTableColumn<TData, TValue> extends Column<TData, TValue> {
 
 export type DataTableColumnDef<TData, TValue> = ColumnDef<TData, TValue> & {
   meta?: ExtendedColumnMeta;
-}
+};
 
 export interface DataTableProps<TData, TValue> {
   columns: DataTableColumnDef<TData, TValue>[];
@@ -54,7 +49,7 @@ export interface DataTableProps<TData, TValue> {
           React.HTMLAttributes<HTMLParagraphElement> &
             React.RefAttributes<HTMLParagraphElement>
         >
-      | "p",
+      | "p"
   ) => React.ReactNode;
   renderTableFooter?: (
     table: Table<TData>,
@@ -66,10 +61,12 @@ export interface DataTableProps<TData, TValue> {
         >
   ) => React.ReactNode;
   filterFunctions?: Record<string, FilterFn<any>>;
-  onFocusedCellChange?: (focusedCell: {
-    rowIndex: number;
-    columnIndex: number;
-  } | null) => void;
+  onFocusedCellChange?: (
+    focusedCell: {
+      rowIndex: number;
+      columnIndex: number;
+    } | null
+  ) => void;
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>

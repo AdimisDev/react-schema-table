@@ -27,21 +27,14 @@ export function DataTableViewOptions<TData>({
     return column.getIsVisible();
   };
 
-  const setColumnVisibility = (
-    column: Column<TData, any>,
-    value: boolean
-  ) => {
+  const setColumnVisibility = (column: Column<TData, any>, value: boolean) => {
     return column.toggleVisibility(!!value);
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8"
-        >
+        <Button variant="outline" size="sm" className="h-8">
           <MixerHorizontalIcon className="mr-2 h-4 w-4" />
           View
         </Button>

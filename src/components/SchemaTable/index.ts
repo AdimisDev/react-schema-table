@@ -1,4 +1,4 @@
-import { DataTable as SchemaDataTable  } from "./DataTable/DataTable";
+import { DataTable as SchemaDataTable } from "./DataTable/DataTable";
 import { DataTableColumnHeader } from "./partials/DataTableColumnHeader";
 import { DataTablePagination } from "./partials/DataTablePagination";
 import { DataTableViewOptions } from "./partials/DataTableViewOptions";
@@ -14,5 +14,5 @@ export {
   DataTableViewOptions,
   DataTableActionCell,
   DataTableFilter,
-  DataTableSearch
+  DataTableSearch,
 };
