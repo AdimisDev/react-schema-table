@@ -2,7 +2,7 @@
   "name": "@adimis/react-schema-table",
   "author": "AdimisDev",
   "private": false,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "GNU",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -18,7 +18,8 @@
   },
   "keywords": [
     "react",
-    "react-schema-table"
+    "react-schema-table",
+    "shadcn"
   ],
   "repository": {
     "type": "git",
@@ -50,15 +51,12 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
-    "date-fns": "^3.6.0",
     "lucide-react": "^0.375.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.3",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "vite-plugin-dts": "^3.9.0",
-    "zod": "^3.23.5"
+    "vite-plugin-dts": "^3.9.0"
   },
   "engines": {
     "node": ">=18"
@@ -76,9 +74,7 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "typedoc": "^0.25.13",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vite-bundle-analyzer": "^0.9.4"
+    "vite": "^5.2.0"
   }
 }
