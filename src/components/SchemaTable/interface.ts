@@ -5,8 +5,20 @@ import {
   Table,
 } from "@tanstack/react-table";
 
+export interface ExtendedColumnMeta {
+  type?: React.HTMLInputTypeAttribute;
+}
+
+export interface DataTableColumn<TData, TValue> extends Column<TData, TValue> {
+  meta?: ExtendedColumnMeta;
+}
+
+export type DataTableColumnDef<TData, TValue> = ColumnDef<TData, TValue> & {
+  meta?: ExtendedColumnMeta;
+}
+
 export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: DataTableColumnDef<TData, TValue>[];
   data: TData[];
   title?: string;
   description?: string;

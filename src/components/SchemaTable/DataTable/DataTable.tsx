@@ -1,4 +1,5 @@
 import {
+  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -58,7 +59,7 @@ export function DataTable<TData, TValue>({
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columns as ColumnDef<TData, TValue>[],
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -146,7 +147,7 @@ export function DataTable<TData, TValue>({
                         className={
                           focusedCell?.rowIndex === rowIndex &&
                           focusedCell?.columnIndex === columnIndex
-                            ? "bg-zinc-200" // Example focus style
+                            ? "bg-zinc-200"
                             : ""
                         }
                       >

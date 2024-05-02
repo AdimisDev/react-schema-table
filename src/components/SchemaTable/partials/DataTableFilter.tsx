@@ -16,7 +16,7 @@ import { Column } from "@tanstack/react-table";
 import { CircleX, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { DataTableFilterProps } from "../interface";
+import { DataTableFilterProps, ExtendedColumnMeta } from "../interface";
 
 export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
   const [filters, setFilters] = useState<
@@ -59,17 +59,34 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
   useEffect(() => {
     const handleApplyFilters = () => {
       filters.forEach((filter) => {
-        if (filter.column !== "") {
+        if (filter.column) {
           const column = table.getColumn(filter.column);
           if (column) {
             column.setFilterValue(filter.value);
+          } else {
+            console.error(`No column with ID '${filter.column}' found.`);
           }
         }
       });
     };
-    handleApplyFilters();
-    console.log("Filters applied: ", filters);
+    if (filters.length > 0) {
+      handleApplyFilters();
+    } else {
+      table.resetColumnFilters();
+    }
   }, [filters, table]);
+
+  const getInputType = (
+    columnName: string
+  ): React.HTMLInputTypeAttribute | undefined => {
+    const column = table.getColumn(columnName);
+    if (column && column.columnDef.meta) {
+      const columnMeta = column.columnDef.meta as ExtendedColumnMeta;
+      const columnType = columnMeta.type;
+      return columnType;
+    }
+    return undefined;
+  };
 
   return (
     <Popover>
@@ -122,6 +139,7 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
                 <div className="col-span-7">
                   <Input
                     value={filter.value}
+                    type={getInputType(filter.column)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       e.preventDefault();
                       setFilters(

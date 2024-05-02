@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import DataTable, { DataTableProps } from "..";
-import { ColumnDef } from "@tanstack/react-table";
+import DataTable, { DataTableColumnDef, DataTableProps } from "..";
 
 export interface EditTableProps<TData, TValue> extends DataTableProps<TData, TValue> {}
 
@@ -11,10 +10,10 @@ function useEditableTableHook<TData extends { id: string }, TValue>({
   columns,
   data,
 }: {
-  columns: ColumnDef<TData, TValue>[];
+  columns: DataTableColumnDef<TData, TValue>[];
   data: TData[];
 }) {
-  const [tableColumns] = useState<ColumnDef<TData, TValue>[]>(columns);
+  const [tableColumns] = useState<DataTableColumnDef<TData, TValue>[]>(columns);
   const [tableData, setTableData] = useState<TData[]>(data);
   const [isCellBeingEdited, setIsCellBeingEdited] = useState<{
     columnIndex: number;

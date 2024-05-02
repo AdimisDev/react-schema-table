@@ -104,6 +104,9 @@ const App = () => {
 
             return <div className="text-right font-medium">{formatted}</div>;
           },
+          meta: {
+            type: "number",
+          },
           filterFn: "includesString",
         },
         {
