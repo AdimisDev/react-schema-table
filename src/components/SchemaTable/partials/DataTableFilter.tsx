@@ -68,6 +68,7 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
       });
     };
     handleApplyFilters();
+    console.log("Filters applied: ", filters);
   }, [filters, table]);
 
   return (
@@ -121,7 +122,7 @@ export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
                 <div className="col-span-7">
                   <Input
                     value={filter.value}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       e.preventDefault();
                       setFilters(
                         filters.map((f) =>

@@ -18,7 +18,7 @@ import {
   TableRow,
   Table,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../ui/card";
-import { DataTableProps } from "./interface";
+import { DataTableProps } from "../interface";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -39,10 +39,15 @@ export function DataTable<TData, TValue>({
   description,
   filterFunctions,
   panel = true,
+  onFocusedCellChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [focusedCell, setFocusedCell] = useState<{
+    rowIndex: number;
+    columnIndex: number;
+  } | null>(null);
 
   const Container = panel ? Card : "div";
   const ContainerHeader = panel ? CardHeader : "div";
@@ -68,6 +73,16 @@ export function DataTable<TData, TValue>({
     },
     filterFns: filterFunctions,
   });
+
+  const handleCellFocus = (rowIndex: number, columnIndex: number) => {
+    setFocusedCell({ rowIndex, columnIndex });
+  };
+
+  useEffect(() => {
+    if (onFocusedCellChange) {
+      onFocusedCellChange(focusedCell);
+    }
+  }, [focusedCell, onFocusedCellChange]);
 
   return (
     <Container
@@ -119,13 +134,22 @@ export function DataTable<TData, TValue>({
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
+                table.getRowModel().rows.map((row, rowIndex) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                    {row.getVisibleCells().map((cell, columnIndex) => (
+                      <TableCell
+                        key={cell.id}
+                        onClick={() => handleCellFocus(rowIndex, columnIndex)}
+                        className={
+                          focusedCell?.rowIndex === rowIndex &&
+                          focusedCell?.columnIndex === columnIndex
+                            ? "bg-zinc-200" // Example focus style
+                            : ""
+                        }
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

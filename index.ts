@@ -1,2 +1,2 @@
 import "./src/index.css";
-export * from "./src/components/SchemaTable/DataTable/index";
+export * from "./src/components/SchemaTable/index";

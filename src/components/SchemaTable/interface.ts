@@ -53,7 +53,11 @@ export interface DataTableProps<TData, TValue> {
             React.RefAttributes<HTMLDivElement>
         >
   ) => React.ReactNode;
-  filterFunctions?: Record<string, FilterFn<any>>
+  filterFunctions?: Record<string, FilterFn<any>>;
+  onFocusedCellChange?: (focusedCell: {
+    rowIndex: number;
+    columnIndex: number;
+  } | null) => void;
 }
 
 export interface DataTableColumnHeaderProps<TData, TValue>
