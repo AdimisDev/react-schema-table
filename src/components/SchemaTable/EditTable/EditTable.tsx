@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import DataTable, { DataTableColumnDef, DataTableProps } from "..";
+import { SchemaDataTable, DataTableColumnDef, DataTableProps } from "..";
 
-export interface EditTableProps<TData, TValue> extends DataTableProps<TData, TValue> {}
+export interface EditTableProps<TData, TValue>
+  extends DataTableProps<TData, TValue> {}
 
 // TODO: Implement React Hook Form for RowData Editing
 // TODO: Use Zod validation for each cell realtime validation and form submit validation.
@@ -51,7 +52,7 @@ const EditTable = <TData extends { id: string }, TValue>({
     });
 
   return (
-    <DataTable
+    <SchemaDataTable
       columns={tableColumns}
       data={tableData}
       renderTableHeader={renderTableHeader}

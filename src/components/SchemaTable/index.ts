@@ -7,7 +7,6 @@ import { DataTableFilter } from "./partials/DataTableFilter";
 import { DataTableSearch } from "./partials/DataTableSearch";
 
 export * from "./interface";
-export default SchemaDataTable;
 export {
   DataTableColumnHeader,
   DataTablePagination,
@@ -15,4 +14,5 @@ export {
   DataTableActionCell,
   DataTableFilter,
   DataTableSearch,
+  SchemaDataTable
 };

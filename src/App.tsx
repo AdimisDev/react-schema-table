@@ -1,7 +1,8 @@
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import DataTable, {
+import {
+  SchemaDataTable,
   DataTableActionCell,
   DataTableFilter,
   DataTablePagination,
@@ -11,7 +12,7 @@ import DataTable, {
 
 const App = () => {
   return (
-    <DataTable
+    <SchemaDataTable
       renderTableHeader={(
         table,
         ContainerHeader,
