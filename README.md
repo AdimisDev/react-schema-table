@@ -5,7 +5,7 @@ A powerful React component for rendering data tables based on a schema definitio
 ## Installation
 
 ```bash
-npm install @adimis/react-schema-table
+npm install @adimis/react-schema-table@latest
 ```
 
 ## Usage
@@ -13,24 +13,47 @@ npm install @adimis/react-schema-table
 Below is a basic example of how to use the `SchemaDataTable` component in a React Typescript application.
 
 ```tsx
-import { SchemaDataTable } from "@adimis/react-schema-table";
+import { ArrowUpDown } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import SchemaDataTable, {
+  DataTableActionCell,
+  DataTableFilter,
+  DataTablePagination,
+  DataTableSearch,
+  DataTableViewOptions,
+} from "@adimis/react-schema-table";
 import "@adimis/react-schema-table/dist/style.css";
-import { Button } from "./components/ui/button";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import {
-  DropdownMenuTrigger,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "./components/ui/dropdown-menu";
-import { Checkbox } from "./components/ui/checkbox";
-import React from "react";
 
 const App = () => {
   return (
     <SchemaDataTable
+      renderTableHeader={(
+        table,
+        ContainerHeader,
+        ContainerTitle,
+        ContainerDescription
+      ) => {
+        return (
+          <ContainerHeader>
+            <ContainerTitle>Edit Table</ContainerTitle>
+            <ContainerDescription>
+              Working Example of the Data Table
+            </ContainerDescription>
+            <span className="mb-2" />
+            <div className="flex justify-between items-center">
+              <div>
+                <DataTableSearch table={table} />
+              </div>
+              <div>
+                <DataTableFilter table={table} />
+                <span className="ml-2" />
+                <DataTableViewOptions table={table} />
+              </div>
+            </div>
+          </ContainerHeader>
+        );
+      }}
       columns={[
         {
           id: "select",
@@ -58,9 +81,7 @@ const App = () => {
         },
         {
           accessorKey: "status",
-          header: ({ column }) => {
-            return <DataTableColumnHeader column={column} title="Status" />;
-          },
+          header: "Status",
           cell: ({ row }) => (
             <div className="capitalize">{row.getValue("status")}</div>
           ),
@@ -99,33 +120,35 @@ const App = () => {
 
             return <div className="text-right font-medium">{formatted}</div>;
           },
+          filterFn: "includesString",
         },
         {
           id: "actions",
           enableHiding: false,
+          header: () => <div className="text-right">Actions</div>,
           cell: ({ row }) => {
             const payment = row.original;
 
             return (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(payment.id)}
-                  >
-                    Copy payment ID
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>View customer</DropdownMenuItem>
-                  <DropdownMenuItem>View payment details</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <DataTableActionCell
+                className="flex justify-end"
+                menuLabel="Actions"
+                menuItems={[
+                  {
+                    label: "Copy payment ID",
+                    onClick: () => navigator.clipboard.writeText(payment.id),
+                  },
+                  {
+                    separator: true,
+                  },
+                  {
+                    label: "View customer",
+                  },
+                  {
+                    label: "View payment details",
+                  },
+                ]}
+              />
             );
           },
         },
@@ -162,6 +185,13 @@ const App = () => {
           email: "carmella@hotmail.com",
         },
       ]}
+      renderTableFooter={(table, ContainerFooter) => {
+        return (
+          <ContainerFooter>
+            <DataTablePagination table={table} />
+          </ContainerFooter>
+        );
+      }}
     />
   );
 };
@@ -175,83 +205,10 @@ export default App;
 - **Sorting and Pagination:** Built-in support for sorting and pagination.
 - **Fully Customizable:** Style and configure data tables to fit your application's needs.
 
-### Props and Typescript Interfaces
-
-```typescript
-import { Column, ColumnDef, Table } from "@tanstack/react-table";
-
-export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  title?: string;
-  description?: string;
-  panel?: boolean;
-  styles?: {
-    containerClassName?: string;
-    containerStyle?: React.CSSProperties;
-    headerClassName?: string;
-    headerStyle?: React.CSSProperties;
-    contentClassName?: string;
-    contentStyle?: React.CSSProperties;
-    footerClassName?: string;
-    footerStyle?: React.CSSProperties;
-    dataTableClassName?: string;
-    dataTableStyle?: React.CSSProperties;
-  };
-  renderTableHeader?: (
-    table: Table<TData>,
-    getFilterValues: (columnName: string) => string,
-    setFilterValues: (columnName: string, value: any) => void | undefined,
-    ContainerTitle:
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLHeadingElement> &
-            React.RefAttributes<HTMLParagraphElement>
-        >
-      | "h2",
-    ContainerDescription:
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLParagraphElement> &
-            React.RefAttributes<HTMLParagraphElement>
-        >
-      | "p"
-  ) => React.ReactNode;
-  renderTableFooter?: (table: Table<TData>) => React.ReactNode;
-  renderFilter?: (
-    getFilterValues: (columnName: string) => string,
-    setFilterValues: (columnName: string, value: any) => void | undefined
-  ) => React.ReactNode;
-  renderColumnVisibility?: DataTableViewOptionsProps<
-    TData,
-    TValue
-  >["renderColumnVisibility"];
-  renderPagination?: DataTablePaginationProps<TData>["renderPagination"];
-}
-
-export interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  title: string;
-}
-
-export interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
-  renderPagination?: (table: Table<TData>) => React.ReactNode;
-}
-
-export interface DataTableViewOptionsProps<TData, TValue> {
-  table: Table<TData>;
-  renderColumnVisibility?: (
-    getAllColumns: () => Column<TData, TValue>[],
-    getColumnVisibility: (column: Column<TData, TValue>) => boolean,
-    setColumnVisibility: (column: Column<TData, TValue>, value: boolean) => void
-  ) => React.ReactNode;
-}
-```
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any bugs, features, or improvements.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/AdimisDev/react-schema-table/blob/main/LICENSE) file for details.
+This project is licensed under the GNU License - see the [LICENSE](https://github.com/AdimisDev/react-schema-table/blob/main/LICENSE) file for details.

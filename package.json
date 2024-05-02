@@ -2,7 +2,7 @@
   "name": "@adimis/react-schema-table",
   "author": "AdimisDev",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "GNU",
   "type": "module",
   "main": "dist/index.umd.js",

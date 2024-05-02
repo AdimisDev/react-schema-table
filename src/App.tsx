@@ -1,8 +1,7 @@
-import EditTable from "./components/SchemaTable/EditTable/EditTable";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import {
+import DataTable, {
   DataTableActionCell,
   DataTableFilter,
   DataTablePagination,
@@ -12,7 +11,7 @@ import {
 
 const App = () => {
   return (
-    <EditTable
+    <DataTable
       renderTableHeader={(
         table,
         ContainerHeader,
