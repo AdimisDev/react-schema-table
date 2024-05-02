@@ -13,17 +13,18 @@ npm install @adimis/react-schema-table@latest
 Below is a basic example of how to use the `SchemaDataTable` component in a React Typescript application.
 
 ```tsx
+import "@adimis/react-schema-table/dist/style.css";
+import { Button } from "./components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import SchemaDataTable, {
+import { Checkbox } from "./components/ui/checkbox";
+import {
   DataTableActionCell,
   DataTableFilter,
   DataTablePagination,
   DataTableSearch,
   DataTableViewOptions,
+  SchemaDataTable,
 } from "@adimis/react-schema-table";
-import "@adimis/react-schema-table/dist/style.css";
 
 const App = () => {
   return (
@@ -119,6 +120,9 @@ const App = () => {
             }).format(amount);
 
             return <div className="text-right font-medium">{formatted}</div>;
+          },
+          meta: {
+            type: "number",
           },
           filterFn: "includesString",
         },

@@ -75,10 +75,28 @@ export interface DataTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
+export type PaginationLayoutTypes =
+  | "total_rows"
+  | "selected_rows"
+  | "rows_per_page_selector"
+  | "page_index"
+  | "controllers";
+
 export interface DataTablePaginationProps<TData> {
   table: Table<TData>;
+  activePage?: number;
+  limit?: number;
+  limitOptions?: number[];
+  layout?: PaginationLayoutTypes[];
+  isFirstDisabled?: boolean;
+  isLastDisabled?: boolean;
+  isNextDisabled?: boolean;
+  isPrevDisabled?: boolean;
+  onLast?: (pageNumber: number) => void;
   onNext?: (pageNumber: number) => void;
+  onFirst?: (pageNumber: number) => void;
   onPrevious?: (pageNumber: number) => void;
+  onPageChange?: (pageNumber: number) => void;
 }
 
 export interface DataTableViewOptionsProps<TData> {
