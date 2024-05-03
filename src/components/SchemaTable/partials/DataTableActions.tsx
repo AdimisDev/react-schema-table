@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,13 +10,13 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { DataTableActionCellProps } from "../interface";
 
-export const DataTableActionCell: React.FC<DataTableActionCellProps> = ({
+export function DataTableActionCell ({
   menuLabel = "Actions",
   menuItems,
   icon = <MoreHorizontal className="h-4 w-4" />,
   className,
   style,
-}) => {
+}: DataTableActionCellProps) {
   return (
     <div className={className ? className : "flex justify-end"} style={style}>
       <DropdownMenu>
@@ -42,4 +41,4 @@ export const DataTableActionCell: React.FC<DataTableActionCellProps> = ({
       </DropdownMenu>
     </div>
   );
-};
+}
