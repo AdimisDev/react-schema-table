@@ -1,6 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Theme, ThemeColors, ThemeProviderProps, ThemeProviderState } from "../interface";
-
+import {
+  Theme,
+  ThemeColors,
+  ThemeProviderProps,
+  ThemeProviderState,
+} from "../interface";
 
 const initialState: ThemeProviderState = {
   theme: "system",
@@ -16,9 +20,16 @@ export function ThemeProvider({
   themeColors,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const storedTheme = localStorage.getItem(storageKey) as Theme;
+      if (storedTheme) {
+        setTheme(storedTheme);
+      }
+    }
+  }, [storageKey]);
 
   useEffect(() => {
     const root = window.document.documentElement;
