@@ -1,8 +1,8 @@
 import "./src/index.css";
 
-import { useKeyPress } from "./src/hooks/useKeyPress";
+import { useKeyPress } from "./src/components/SchemaTable/hooks/useKeyPress";
 import {
-  SchemaDataTable,
+  SchemaTable,
   DataTableColumnHeader,
   DataTablePagination,
   DataTableViewOptions,
@@ -14,7 +14,7 @@ import {
 export * from "./src/components/SchemaTable/interface";
 export {
   useKeyPress,
-  SchemaDataTable,
+  SchemaTable,
   DataTableColumnHeader,
   DataTablePagination,
   DataTableViewOptions,

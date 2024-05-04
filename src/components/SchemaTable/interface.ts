@@ -30,6 +30,8 @@ export interface DataTableProps<TData, TValue> {
     dataTableClassName?: string;
     dataTableStyle?: React.CSSProperties;
   };
+  theme?: Theme;
+  themeColors?: ThemeColors;
   renderTableHeader?: (
     table: Table<TData>,
     ContainerHeader:
@@ -127,4 +129,46 @@ export interface DataTableActionCellProps {
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+}
+
+// SECTION: Theme Interfaces
+
+export type Theme = "dark" | "light" | "system";
+
+export interface ThemeColors {
+  root: {
+    background?: string;
+    foreground?: string;
+    card?: string;
+    "card-foreground"?: string;
+    popover?: string;
+    "popover-foreground"?: string;
+    primary?: string;
+    "primary-foreground"?: string;
+    secondary?: string;
+    "secondary-foreground"?: string;
+    muted?: string;
+    "muted-foreground"?: string;
+    accent?: string;
+    "accent-foreground"?: string;
+    destructive?: string;
+    "destructive-foreground"?: string;
+    border?: string;
+    input?: string;
+    ring?: string;
+    radius?: string;
+  };
+  dark: ThemeColors["root"];
+}
+
+export interface ThemeProviderProps {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+  storageKey?: string;
+  themeColors?: ThemeColors;
+}
+
+export interface ThemeProviderState {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 }
