@@ -1,24 +1,24 @@
 import "./src/index.css";
 
-import { useKeyPress } from "./src/components/SchemaTable/hooks/useKeyPress";
+import { useKeyPress } from "./src/hooks/useKeyPress";
 import {
-  SchemaTable,
   DataTableColumnHeader,
   DataTablePagination,
   DataTableViewOptions,
   DataTableActionCell,
   DataTableFilter,
   DataTableSearch,
-} from "./src/components/SchemaTable/index";
+  SchemaDataTable,
+} from "./src/index";
 
-export * from "./src/components/SchemaTable/interface";
+export * from "./src/interface";
 export {
   useKeyPress,
-  SchemaTable,
   DataTableColumnHeader,
   DataTablePagination,
   DataTableViewOptions,
   DataTableActionCell,
   DataTableFilter,
   DataTableSearch,
+  SchemaDataTable,
 };

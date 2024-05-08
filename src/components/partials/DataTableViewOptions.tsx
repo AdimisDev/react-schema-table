@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DataTableViewOptionsProps } from "../interface";
+import { DataTableViewOptionsProps } from "../../interface";
 import { Column } from "@tanstack/react-table";
 
 export function DataTableViewOptions<TData>({

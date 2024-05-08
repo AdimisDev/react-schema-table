@@ -27,12 +27,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
-import { DataTableProps } from "../interface";
-import { useKeyPress } from "@/components/SchemaTable/hooks/useKeyPress";
-import { useTheme } from "../context/ThemeProvider";
+} from "../ui/card";
+import { DataTableProps } from "../../interface";
+import { useKeyPress } from "@/hooks/useKeyPress";
+import { ThemeProvider, useTheme } from "../../context/ThemeProvider";
 
-export function DataTableBody<TData, TValue>({
+function DataTableBody<TData, TValue>({
   columns,
   data,
   styles,
@@ -231,3 +231,17 @@ export function DataTableBody<TData, TValue>({
     </Container>
   );
 }
+
+function SchemaDataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
+  return (
+    <ThemeProvider
+      defaultTheme={props.theme}
+      storageKey="adimis-react-schema-table-theme"
+      themeColors={props.themeColors}
+    >
+      <DataTableBody {...props} />
+    </ThemeProvider>
+  );
+}
+
+export default SchemaDataTable;

@@ -16,7 +16,7 @@ import { Column } from "@tanstack/react-table";
 import { CircleX, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { DataTableFilterProps, ExtendedColumnMeta } from "../interface";
+import { DataTableFilterProps, ExtendedColumnMeta } from "../../interface";
 
 export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {
   const [filters, setFilters] = useState<

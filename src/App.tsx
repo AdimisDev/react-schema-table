@@ -8,9 +8,9 @@ import {
   DataTableProps,
   DataTableSearch,
   DataTableViewOptions,
-  SchemaTable,
   ThemeColors,
-} from "./components/SchemaTable";
+  SchemaDataTable
+} from ".";
 import { Checkbox } from "./components/ui/checkbox";
 
 interface IPaymentData {
@@ -236,7 +236,7 @@ const App = () => {
     theme: "dark",
   };
 
-  return <SchemaTable {...basicTableProps} />;
+  return <SchemaDataTable {...basicTableProps} />;
 };
 
 export default App;

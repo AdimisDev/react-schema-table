@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import dts from 'vite-plugin-dts';
-import path from 'path';
+/* eslint-disable @typescript-eslint/triple-slash-reference */
+/// <reference types="vite/client" />
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import dts from "vite-plugin-dts";
+import path from "path";
 
 export default defineConfig({
   resolve: {
@@ -12,26 +15,26 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "./index.ts"),
-      name: 'AdimisReactSchemaTable',
-      formats: ['es', 'umd'],
-      fileName: (format) => `index.${format}.js`
+      name: "AdimisReactSchemaForm",
+      formats: ["es", "umd"],
+      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ["react", "react-dom"],
       output: {
         globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM'
-        }
-      }
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
     },
     sourcemap: true,
-    emptyOutDir: true
+    emptyOutDir: true,
   },
   plugins: [
     react(),
     dts({
-      insertTypesEntry: true
-    })
-  ]
+      insertTypesEntry: true,
+    }),
+  ],
 });

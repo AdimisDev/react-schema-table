@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { DataTableActionCellProps } from "../interface";
+import { DataTableActionCellProps } from "../../interface";
 
 export function DataTableActionCell ({
   menuLabel = "Actions",

@@ -1,22 +1,35 @@
 # @adimis/react-schema-table
 
-A powerful React component for rendering data tables based on a schema definition. This package allows developers to quickly generate dynamic tables with features like sorting, pagination, and custom cell rendering.
+This is a robust React component designed for rendering data tables, leveraging React, TypeScript, Shadcn, and Tanstack Tables based on schema definitions. The package enables developers to efficiently create dynamic tables equipped with features such as sorting, pagination, and custom cell rendering. It is compatible with React 18.2.0 and Next.js 14.2.3, ensuring seamless integration and functionality.
 
 ## Installation
 
-```bash
-npm install @adimis/react-schema-table@latest
-```
+To start using `@adimis/react-schema-form`, follow these steps:
+
+1. Install the package via npm:
+
+   ```bash
+   npm install @adimis/react-schema-form
+   ```
+
+2. Import the necessary CSS for styling if you are using the ShadcnForm Component:
+   ```tsx
+   import "@adimis/react-schema-form/dist/style.css";
+   ```
+
+These steps ensure that all the necessary dependencies and styles are set up for the component to function and look correctly in your application.
 
 ## Usage
 
 Below is a basic example of how to use the `SchemaDataTable` component in a React Typescript application.
 
 ```tsx
+"use client";
+
 import "@adimis/react-schema-table/dist/style.css";
-import { Button } from "./components/ui/button";
+import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { Checkbox } from "./components/ui/checkbox";
+import { Checkbox } from "./ui/checkbox";
 import {
   DataTableActionCell,
   DataTableFilter,
@@ -24,11 +37,60 @@ import {
   DataTableSearch,
   DataTableViewOptions,
   SchemaDataTable,
+  ThemeColors,
 } from "@adimis/react-schema-table";
 
-const App = () => {
+const defaultThemeColors: ThemeColors = {
+  root: {
+    background: "0 0% 100%",
+    foreground: "0 0% 3.9%",
+    card: "0 0% 100%",
+    "card-foreground": "0 0% 3.9%",
+    popover: "0 0% 100%",
+    "popover-foreground": "0 0% 3.9%",
+    primary: "0 72.2% 50.6%",
+    "primary-foreground": "0 85.7% 97.3%",
+    secondary: "0 0% 96.1%",
+    "secondary-foreground": "0 0% 9%",
+    muted: "0 0% 96.1%",
+    "muted-foreground": "0 0% 45.1%",
+    accent: "0 0% 96.1%",
+    "accent-foreground": "0 0% 9%",
+    destructive: "0 84.2% 60.2%",
+    "destructive-foreground": "0 0% 98%",
+    border: "0 0% 89.8%",
+    input: "0 0% 89.8%",
+    ring: "0 72.2% 50.6%",
+    radius: "1rem",
+  },
+  dark: {
+    background: "0 0% 3.9%",
+    foreground: "0 0% 98%",
+    card: "0 0% 3.9%",
+    "card-foreground": "0 0% 98%",
+    popover: "0 0% 3.9%",
+    "popover-foreground": "0 0% 98%",
+    primary: "0 72.2% 50.6%",
+    "primary-foreground": "0 85.7% 97.3%",
+    secondary: "0 0% 14.9%",
+    "secondary-foreground": "0 0% 98%",
+    muted: "0 0% 14.9%",
+    "muted-foreground": "0 0% 63.9%",
+    accent: "0 0% 14.9%",
+    "accent-foreground": "0 0% 98%",
+    destructive: "0 62.8% 30.6%",
+    "destructive-foreground": "0 0% 98%",
+    border: "0 0% 14.9%",
+    input: "0 0% 14.9%",
+    ring: "0 72.2% 50.6%",
+  },
+};
+
+const Table = () => {
   return (
     <SchemaDataTable
+      theme="dark"
+      themeColors={defaultThemeColors}
       renderTableHeader={(
         table,
         ContainerHeader,
@@ -200,7 +262,7 @@ const App = () => {
   );
 };
 
-export default App;
+export default Table;
 ```
 
 ### Features

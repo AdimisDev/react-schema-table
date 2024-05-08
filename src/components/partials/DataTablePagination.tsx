@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect } from "react";
-import { DataTablePaginationProps, PaginationLayoutTypes } from "../interface";
+import { DataTablePaginationProps, PaginationLayoutTypes } from "../../interface";
 
 export function DataTablePagination<TData>({
   table,
