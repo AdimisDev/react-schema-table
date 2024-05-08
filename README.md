@@ -4,17 +4,18 @@ This is a robust React component designed for rendering data tables, leveraging 
 
 ## Installation
 
-To start using `@adimis/react-schema-form`, follow these steps:
+To start using `@adimis/react-schema-table`, follow these steps:
 
 1. Install the package via npm:
 
    ```bash
-   npm install @adimis/react-schema-form
+   npm install @adimis/react-schema-table
    ```
 
-2. Import the necessary CSS for styling if you are using the ShadcnForm Component:
+2. Import the necessary CSS for styling if you are using the SchemaDataTable Component:
+
    ```tsx
-   import "@adimis/react-schema-form/dist/style.css";
+   import "@adimis/react-schema-table/dist/style.css";
    ```
 
 These steps ensure that all the necessary dependencies and styles are set up for the component to function and look correctly in your application.
