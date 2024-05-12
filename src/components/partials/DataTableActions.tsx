@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { DataTableActionCellProps } from "../../interface";
 
-export function DataTableActionCell ({
+export function DataTableActionCell({
   menuLabel = "Actions",
   menuItems,
   icon = <MoreHorizontal className="h-4 w-4" />,

@@ -6,16 +6,19 @@ export interface ExtendedColumnMeta {
 
 export interface DataTableColumn<TData, TValue> extends Column<TData, TValue> {
   meta?: ExtendedColumnMeta;
+  disableFocus?: boolean;
 }
 
 export type DataTableColumnDef<TData, TValue> = ColumnDef<TData, TValue> & {
   meta?: ExtendedColumnMeta;
+  disableFocus?: boolean;
 };
 
 export interface DataTableProps<TData, TValue> {
   columns: DataTableColumnDef<TData, TValue>[];
   data: TData[];
-  title?: string;
+  tableLabel: string;
+  tableSlug: string;
   description?: string;
   panel?: boolean;
   styles?: {
@@ -32,36 +35,8 @@ export interface DataTableProps<TData, TValue> {
   };
   theme?: Theme;
   themeColors?: ThemeColors;
-  renderTableHeader?: (
-    table: Table<TData>,
-    ContainerHeader:
-      | "div"
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLDivElement> &
-            React.RefAttributes<HTMLDivElement>
-        >,
-    ContainerTitle:
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLHeadingElement> &
-            React.RefAttributes<HTMLParagraphElement>
-        >
-      | "h2",
-    ContainerDescription:
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLParagraphElement> &
-            React.RefAttributes<HTMLParagraphElement>
-        >
-      | "p"
-  ) => React.ReactNode;
-  renderTableFooter?: (
-    table: Table<TData>,
-    ContainerFooter:
-      | "div"
-      | React.ForwardRefExoticComponent<
-          React.HTMLAttributes<HTMLDivElement> &
-            React.RefAttributes<HTMLDivElement>
-        >
-  ) => React.ReactNode;
+  renderTableHeader?: (table: Table<TData>) => React.ReactNode;
+  renderTableFooter?: (table: Table<TData>) => React.ReactNode;
   filterFunctions?: Record<string, FilterFn<any>>;
   onFocusedCellChange?: (
     focusedCell: {

@@ -1,6 +1,16 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Input } from "./input";
+import { Cell } from "@tanstack/react-table";
+import { useEditTableContext } from "@/context/EditTableContext";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./card";
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -13,16 +23,16 @@ const Table = React.forwardRef<
       {...props}
     />
   </div>
-))
-Table.displayName = "Table"
+));
+Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
-))
-TableHeader.displayName = "TableHeader"
+));
+TableHeader.displayName = "TableHeader";
 
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
@@ -33,23 +43,8 @@ const TableBody = React.forwardRef<
     className={cn("[&_tr:last-child]:border-0", className)}
     {...props}
   />
-))
-TableBody.displayName = "TableBody"
-
-const TableFooter = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tfoot
-    ref={ref}
-    className={cn(
-      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
-      className
-    )}
-    {...props}
-  />
-))
-TableFooter.displayName = "TableFooter"
+));
+TableBody.displayName = "TableBody";
 
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
@@ -63,8 +58,8 @@ const TableRow = React.forwardRef<
     )}
     {...props}
   />
-))
-TableRow.displayName = "TableRow"
+));
+TableRow.displayName = "TableRow";
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
@@ -78,8 +73,70 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   />
-))
-TableHead.displayName = "TableHead"
+));
+TableHead.displayName = "TableHead";
+
+const TableEditCell = React.forwardRef<
+  HTMLTableCellElement,
+  {
+    cell: Cell<any, any>;
+    rowIndex: number;
+    columnIndex: number;
+  } & React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ cell, rowIndex, columnIndex, className, ...props }, ref) => {
+  const {
+    setFocusedCell,
+    isCellFocused,
+    editCell,
+    getCellValue,
+    getCellType,
+    rowFlexRender,
+  } = useEditTableContext<any, any>();
+
+  const focused = isCellFocused(rowIndex, columnIndex);
+
+  const handleChange = (value: any) => {
+    const columnId = cell.column.id;
+    if (columnId) {
+      editCell(rowIndex, columnId, value);
+    }
+  };
+
+  const handleBlur = () => {
+    setFocusedCell(null);
+  };
+
+  return (
+    <td
+      ref={ref}
+      className={cn(
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0",
+        focused ? "bg-muted/25" : "",
+        className
+      )}
+      onClick={() => setFocusedCell({ rowIndex, columnIndex })}
+      {...props}
+    >
+      {focused ? (
+        <Input
+          type={getCellType(cell) || "text"}
+          defaultValue={getCellValue(cell)}
+          defaultChecked={
+            getCellType(cell) === "checkbox"
+              ? Boolean(getCellValue(cell))
+              : undefined
+          }
+          onBlur={handleBlur}
+          onChange={(e) => handleChange(e.target.value)}
+          autoFocus
+        />
+      ) : (
+        rowFlexRender(cell.column.columnDef.cell, cell.getContext())
+      )}
+    </td>
+  );
+});
+TableEditCell.displayName = "TableEditCell";
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
@@ -90,8 +147,8 @@ const TableCell = React.forwardRef<
     className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
     {...props}
   />
-))
-TableCell.displayName = "TableCell"
+));
+TableCell.displayName = "TableCell";
 
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
@@ -102,16 +159,125 @@ const TableCaption = React.forwardRef<
     className={cn("mt-4 text-sm text-muted-foreground", className)}
     {...props}
   />
-))
-TableCaption.displayName = "TableCaption"
+));
+TableCaption.displayName = "TableCaption";
+
+const TableContainer = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, children, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const Container = panel ? Card : "div";
+  return (
+    <Container {...rest} ref={ref}>
+      {children}
+    </Container>
+  );
+});
+TableContainer.displayName = "TableContainer";
+
+const TableContainerHeader = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, children, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const ContainerHeader = panel ? CardHeader : "div";
+  return (
+    <ContainerHeader {...rest} ref={ref}>
+      {children}
+    </ContainerHeader>
+  );
+});
+TableContainerHeader.displayName = "TableContainerHeader";
+
+const TableContainerTitle = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, children, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const ContainerTitle = panel ? CardTitle : "h2";
+  return (
+    <ContainerTitle {...rest} ref={ref}>
+      {children}
+    </ContainerTitle>
+  );
+});
+TableContainerTitle.displayName = "TableContainerTitle";
+
+const TableContainerDescription = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, children, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const ContainerDescription = panel ? CardDescription : "p";
+  return (
+    <ContainerDescription {...rest} ref={ref}>
+      {children}
+    </ContainerDescription>
+  );
+});
+TableContainerDescription.displayName = "TableContainerDescription";
+
+const TableContainerBody = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+    children: React.ReactNode;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, children, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const ContainerBody = panel ? CardContent : "div";
+  return (
+    <ContainerBody {...rest} ref={ref}>
+      {children}
+    </ContainerBody>
+  );
+});
+TableContainerBody.displayName = "TableContainerBody";
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref: React.Ref<HTMLTableSectionElement>) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+));
+TableFooter.displayName = "TableFooter";
+
+const TableContainerFooter = React.forwardRef<
+  HTMLDivElement,
+  {
+    panel?: boolean;
+  } & React.HTMLAttributes<HTMLDivElement>
+>(({ panel, ...rest }, ref: React.Ref<HTMLDivElement>) => {
+  const ContainerFooter = panel ? CardFooter : "div";
+  return <ContainerFooter {...rest} ref={ref} />;
+});
+TableContainerFooter.displayName = "TableContainerFooter";
 
 export {
   Table,
   TableHeader,
   TableBody,
-  TableFooter,
   TableHead,
   TableRow,
   TableCell,
   TableCaption,
-}
+  TableEditCell,
+  TableContainer,
+  TableContainerHeader,
+  TableContainerTitle,
+  TableContainerDescription,
+  TableContainerBody,
+  TableContainerFooter,
+  TableFooter,
+};

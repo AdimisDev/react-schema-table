@@ -1,4 +1,4 @@
-import SchemaDataTable from "./components/SchemaTable/SchemaDataTable";
+import SchemaDataTable from "./components/SchemaTable/dataTable/ShadcnDataTable";
 import { DataTableColumnHeader } from "./components/partials/DataTableColumnHeader";
 import { DataTablePagination } from "./components/partials/DataTablePagination";
 import { DataTableViewOptions } from "./components/partials/DataTableViewOptions";
