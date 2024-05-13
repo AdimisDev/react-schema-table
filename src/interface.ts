@@ -2,16 +2,15 @@ import { Column, ColumnDef, FilterFn, Table } from "@tanstack/react-table";
 
 export interface ExtendedColumnMeta {
   type?: React.HTMLInputTypeAttribute;
+  disableFocus?: boolean;
 }
 
 export interface DataTableColumn<TData, TValue> extends Column<TData, TValue> {
   meta?: ExtendedColumnMeta;
-  disableFocus?: boolean;
 }
 
 export type DataTableColumnDef<TData, TValue> = ColumnDef<TData, TValue> & {
   meta?: ExtendedColumnMeta;
-  disableFocus?: boolean;
 };
 
 export interface DataTableProps<TData, TValue> {

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { Input } from "./input";
+import { Input } from "../ui/input";
 import { Cell } from "@tanstack/react-table";
-import { useEditTableContext } from "@/context/EditTableContext";
+import { useEditTableContext } from "@/package/context/EditTableContext";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card";
+} from "../ui/card";
 
 const Table = React.forwardRef<
   HTMLTableElement,

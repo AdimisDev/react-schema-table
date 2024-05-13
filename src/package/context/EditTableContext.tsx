@@ -27,7 +27,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useCtrlS, useKeyPress } from "@/hooks/useKeyPress";
+import { useCtrlS, useKeyPress } from "@/package/hooks/useKeyPress";
 import {
   useForm,
   UseFormReturn,
@@ -35,6 +35,7 @@ import {
   SubmitHandler,
 } from "react-hook-form";
 import { DataTableColumnDef, DataTableProps } from "@/interface";
+import { z } from "zod";
 
 export interface EditTableContextType<TData, TValue> {
   tableKey: string;
@@ -78,6 +79,8 @@ export interface EditTableProps<TData, TValue>
   onInvalidSubmit: (errors: Record<string, any | any[]>) => void;
   children?: ReactNode;
   tableOptions?: TableOptions<TData>;
+  editType?: "inline" | "drawer";
+  validation?: z.ZodType<TData, any, any>;
 }
 
 export type EditTableResponse<TData> = {
@@ -114,6 +117,7 @@ function EditTableProvider<TData, TValue>({
     columnIndex: number;
     value: any;
   } | null>(null);
+
   const formMethods = useForm<EditTableResponse<TData>>({
     defaultValues: {
       [tableKey]: data,
@@ -121,6 +125,7 @@ function EditTableProvider<TData, TValue>({
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
+
   const { fields, append, remove, update } = useFieldArray<
     any,
     typeof tableKey
@@ -158,7 +163,7 @@ function EditTableProvider<TData, TValue>({
 
       let newCol = columnIndex + deltaCol;
       newCol = Math.max(0, Math.min(newCol, columns.length - 1));
-      if (columns[newCol].disableFocus !== true) {
+      if (columns[newCol].meta?.disableFocus !== true) {
         setFocusedCell({ rowIndex: newRow, columnIndex: newCol });
         if (onFocusedCellChange) {
           onFocusedCellChange({ rowIndex: newRow, columnIndex: newCol });
@@ -168,10 +173,10 @@ function EditTableProvider<TData, TValue>({
   };
 
   useEffect(() => {
-    if (columns.length > 0 && !columns[0].disableFocus) {
+    if (columns.length > 0 && !columns[0].meta?.disableFocus) {
       setFocusedCell({ rowIndex: 0, columnIndex: 0 });
     }
-  }, [columns]);
+  }, [columns, tableKey]);
 
   useKeyPress("ArrowRight", () => moveFocus(0, 1));
   useKeyPress("ArrowLeft", () => moveFocus(0, -1));

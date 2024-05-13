@@ -1,5 +1,5 @@
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/package/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/package/components/ui/dropdown-menu";
 import { DataTableViewOptionsProps } from "../../interface";
 import { Column } from "@tanstack/react-table";
 

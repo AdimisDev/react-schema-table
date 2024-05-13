@@ -1,6 +1,6 @@
 import "./src/index.css";
 
-import { useKeyPress } from "./src/hooks/useKeyPress";
+import { useKeyPress } from "./src/package/hooks/useKeyPress";
 import {
   DataTableColumnHeader,
   DataTablePagination,

@@ -4,14 +4,14 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/package/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/package/components/ui/select";
 import { useEffect } from "react";
 import { DataTablePaginationProps, PaginationLayoutTypes } from "../../interface";
 

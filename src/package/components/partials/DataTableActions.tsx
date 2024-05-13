@@ -5,10 +5,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/package/components/ui/dropdown-menu";
+import { Button } from "@/package/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { DataTableActionCellProps } from "../../interface";
+import { DataTableActionCellProps } from "@/interface";
 
 export function DataTableActionCell({
   menuLabel = "Actions",

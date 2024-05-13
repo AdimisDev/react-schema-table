@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { DataTableSearchProps } from "../../interface";
+import { DataTableSearchProps } from "@/interface";
+import { Input } from "@/package/components/ui/input";
 
 export function DataTableSearch<TData>({ table }: DataTableSearchProps<TData>) {
   return (

@@ -4,7 +4,7 @@ import {
   ThemeColors,
   ThemeProviderProps,
   ThemeProviderState,
-} from "../interface";
+} from "../../interface";
 
 const initialState: ThemeProviderState = {
   theme: "system",

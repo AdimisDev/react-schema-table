@@ -5,7 +5,7 @@ import {
   TableHeader,
   TableRow,
   Table,
-} from "@/components/ui/table";
+} from "@/package/components/table/table";
 import React from "react";
 import {
   Card,
@@ -14,12 +14,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
+} from "../../../package/components/ui/card";
 import EditTableProvider, {
   EditTableProps,
   useEditTableContext,
-} from "@/context/EditTableContext";
-import { Button } from "../../ui/button";
+} from "@/package/context/EditTableContext";
+import { Button } from "../../../package/components/ui/button";
 import { DataTableColumnDef } from "@/interface";
 import TableEditCell from "./partials/TableEditCell";
 

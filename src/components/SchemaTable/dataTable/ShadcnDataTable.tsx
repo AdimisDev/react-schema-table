@@ -5,7 +5,7 @@ import {
   TableHeader,
   TableRow,
   Table,
-} from "@/components/ui/table";
+} from "@/package/components/table/table";
 import React, { useEffect } from "react";
 import {
   Card,
@@ -14,12 +14,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
+} from "../../../package/components/ui/card";
 import { DataTableProps } from "../../../interface";
-import { ThemeProvider, useTheme } from "../../../context/ThemeProvider";
+import { ThemeProvider, useTheme } from "../../../package/context/ThemeProvider";
 import DataTableProvider, {
   useDataTableContext,
-} from "@/context/DataTableContext";
+} from "@/package/context/DataTableContext";
 
 function ShadcnDataTableBody<TData, TValue>({
   columns,

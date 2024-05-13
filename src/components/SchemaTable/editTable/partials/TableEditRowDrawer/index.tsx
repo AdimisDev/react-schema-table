@@ -1,4 +1,4 @@
-import { useEditTableContext } from "@/context/EditTableContext";
+import { useEditTableContext } from "@/package/context/EditTableContext";
 
 interface TableEditRowProps {}
 

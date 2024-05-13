@@ -12,13 +12,16 @@ import {
   TableContainerDescription,
   TableContainerBody,
   TableContainerFooter,
-} from "@/components/ui/table";
+} from "@/package/components/table/table";
 import React from "react";
-import { Button } from "../../ui/button";
 import EditTableProvider, {
   EditTableProps,
   useEditTableContext,
-} from "@/context/EditTableContext";
+} from "@/package/context/EditTableContext";
+import { DataTableSearch } from "@/package/components/partials/DataTableSearch";
+import { DataTableFilter } from "@/package/components/partials/DataTableFilter";
+import { DataTableViewOptions } from "@/package/components/partials/DataTableViewOptions";
+import { DataTablePagination } from "@/package/components/partials/DataTablePagination";
 
 function ShadcnEditTableBody<TData, TValue>({
   columns,
@@ -26,10 +29,10 @@ function ShadcnEditTableBody<TData, TValue>({
   description,
   panel = true,
   tableLabel,
+  editType = "inline",
 }: EditTableProps<TData, TValue>) {
   const {
     table,
-    addRow,
     getColumns,
     getHeaderContext,
     getRows,
@@ -49,27 +52,31 @@ function ShadcnEditTableBody<TData, TValue>({
         style={styles?.headerStyle}
         panel={panel}
       >
-        {/*Table Add Row Drawer*/}
-        <Button
-          onClick={() => {
-            addRow({
-              id: table.getRowModel().rows?.length + 1,
-              amount: 5,
-              status: "Success",
-              email: "something@example.com",
-            } as TData);
-          }}
-        >
-          Create
-        </Button>
-        {tableLabel && (
-          <TableContainerTitle panel={panel}>{tableLabel}</TableContainerTitle>
-        )}
-        {description && (
-          <TableContainerDescription panel={panel}>
-            {description}
-          </TableContainerDescription>
-        )}
+        <div className="mb-2">
+          {tableLabel && (
+            <TableContainerTitle panel={panel}>
+              {tableLabel}
+            </TableContainerTitle>
+          )}
+          {description && (
+            <TableContainerDescription panel={panel}>
+              {description}
+            </TableContainerDescription>
+          )}
+        </div>
+        <div>
+          <span className="mb-2" />
+          <div className="flex justify-between items-center">
+            <div>
+              <DataTableSearch table={table} />
+            </div>
+            <div>
+              <DataTableFilter table={table} />
+              <span className="ml-2" />
+              <DataTableViewOptions table={table} />
+            </div>
+          </div>
+        </div>
       </TableContainerHeader>
       <TableContainerBody
         className={styles?.containerClassName}
@@ -103,13 +110,20 @@ function ShadcnEditTableBody<TData, TValue>({
                   data-state={getIsRowSelected(row) && "selected"}
                 >
                   {getRowVisbleCells(row).map((cell, columnIndex) => {
-                    return (
+                    return editType === "inline" ? (
                       <TableEditCell
                         key={cell.id}
                         cell={cell}
                         columnIndex={columnIndex}
                         rowIndex={rowIndex}
                       />
+                    ) : (
+                      <TableCell>
+                        {rowFlexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
                     );
                   })}
                 </TableRow>
@@ -128,7 +142,7 @@ function ShadcnEditTableBody<TData, TValue>({
         </Table>
       </TableContainerBody>
       <TableContainerFooter panel={panel}>
-        <Button type="submit">Save</Button>
+        <DataTablePagination table={table} />
       </TableContainerFooter>
     </TableContainer>
   );

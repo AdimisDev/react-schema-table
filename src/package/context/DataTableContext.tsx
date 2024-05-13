@@ -19,8 +19,8 @@ import {
   flexRender,
   Renderable,
 } from "@tanstack/react-table";
-import { DataTableProps } from "..";
-import { useKeyPress } from "@/hooks/useKeyPress";
+import { DataTableProps } from "../..";
+import { useKeyPress } from "@/package/hooks/useKeyPress";
 
 interface DataTableContextType<TData, TValue> {
   data: TData[];
@@ -120,7 +120,7 @@ function DataTableProvider<TData, TValue>({
 
       let newCol = columnIndex + deltaCol;
       newCol = Math.max(0, Math.min(newCol, columns.length - 1));
-      if (columns[newCol].disableFocus !== true) {
+      if (columns[newCol].meta?.disableFocus !== true) {
         setFocusedCell({ rowIndex: newRow, columnIndex: newCol });
         if (onFocusedCellChange) {
           onFocusedCellChange({ rowIndex: newRow, columnIndex: newCol });
@@ -130,7 +130,7 @@ function DataTableProvider<TData, TValue>({
   };
 
   useEffect(() => {
-    if (columns[0].disableFocus !== true) {
+    if (columns[0].meta?.disableFocus !== true) {
       setFocusedCell({ rowIndex: 0, columnIndex: 0 });
     }
   }, [columns]);

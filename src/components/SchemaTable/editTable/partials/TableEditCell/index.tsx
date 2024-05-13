@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { useEditTableContext } from "@/context/EditTableContext";
+import { Input } from "@/package/components/ui/input";
+import { useEditTableContext } from "@/package/context/EditTableContext";
 
 export interface TableEditCellProps {
   inputType?: React.HTMLInputTypeAttribute;

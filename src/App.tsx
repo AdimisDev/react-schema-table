@@ -1,19 +1,18 @@
 "use client";
 
-import { ArrowUpDown } from "lucide-react";
 import {
   DataTableActionCell,
+  DataTableColumnHeader,
+  // DataTableProps,
+  // ThemeColors,
   // DataTableFilter,
   // DataTablePagination,
-  // DataTableProps,
   // DataTableSearch,
   // DataTableViewOptions,
-  // ThemeColors,
-  // SchemaDataTable,
 } from ".";
 // import SchemaPlainTable from "./components/SchemaTable/DataTable";
 import React from "react";
-import { EditTableProps } from "./context/EditTableContext";
+import { EditTableProps } from "./package/context/EditTableContext";
 import ShadcnEditTable from "./components/SchemaTable/editTable/ShadcnEditTable";
 // import { Checkbox } from "./components/ui/checkbox";
 
@@ -250,16 +249,7 @@ const App = () => {
       {
         accessorKey: "email",
         header: ({ column }) => {
-          return (
-            <button
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-            >
-              Email
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </button>
-          );
+          return <DataTableColumnHeader column={column} title="Email" />;
         },
         cell: ({ row }) => (
           <div className="lowercase">{row.getValue("email")}</div>
@@ -287,7 +277,6 @@ const App = () => {
       },
       {
         id: "actions",
-        disableFocus: true,
         header: () => <div className="flex justify-end">Actions</div>,
         cell: ({ row }) => {
           const payment = row.original;
@@ -312,6 +301,9 @@ const App = () => {
               ]}
             />
           );
+        },
+        meta: {
+          disableFocus: true,
         },
       },
     ],

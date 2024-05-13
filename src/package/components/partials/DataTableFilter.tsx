@@ -1,21 +1,21 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/package/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/package/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+} from "@/package/components/ui/select";
+import { Input } from "@/package/components/ui/input";
 import { Column } from "@tanstack/react-table";
 import { CircleX, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/package/components/ui/separator";
 import { DataTableFilterProps, ExtendedColumnMeta } from "../../interface";
 
 export function DataTableFilter<TData>({ table }: DataTableFilterProps<TData>) {

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { DataTableProps } from "../../../interface";
-import { ThemeProvider, useTheme } from "../../../context/ThemeProvider";
+import { ThemeProvider, useTheme } from "../../../package/context/ThemeProvider";
 import DataTableProvider, {
   useDataTableContext,
-} from "@/context/DataTableContext";
+} from "@/package/context/DataTableContext";
 
 function DataTableBody<TData, TValue>({
   styles,

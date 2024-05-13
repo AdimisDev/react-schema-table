@@ -6,15 +6,15 @@ import {
 } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/package/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { DataTableColumnHeaderProps } from "../../interface";
+} from "@/package/components/ui/dropdown-menu";
+import { DataTableColumnHeaderProps } from "@/interface";
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
